@@ -29,6 +29,7 @@
         "kouz/laravel-airbrake": "^0.4",
         "laracasts/flash": " ^3.0",
         "laravel/framework": "5.7.*",
+        "laravel/scout": "^7.2",
         "laravelcollective/html": "5.7.*",
         "league/uri": "^5.0",
         "madewithlove/illuminate-psr-cache-bridge": "^1.0",
@@ -44,6 +45,7 @@
         "remp/laravel-widgets": "*",
         "simshaun/recurr": "^3.0",
         "snowplow/referer-parser": "dev-master",
+        "teamtnt/laravel-scout-tntsearch-driver": "^7.2",
         "tightenco/ziggy": "^0.7.1",
         "yadakhov/insert-on-duplicate-key": "^1.2",
         "yajra/laravel-datatables-oracle": "^8.0"
