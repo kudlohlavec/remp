@@ -4,10 +4,11 @@ namespace App;
 
 use App\Model\TableName;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Segment extends Model
 {
-    use TableName;
+    use TableName, Searchable;
 
     protected $casts = [
         'active' => 'boolean',
@@ -23,6 +24,20 @@ class Segment extends Model
         'active',
         'segment_group_id'
     ];
+
+    /**
+     * Index only id and title
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'code' => $this->code
+        ];
+    }
 
     public function rules()
     {
