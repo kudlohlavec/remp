@@ -2,12 +2,13 @@
 
 namespace App;
 
+use App\Traits\SearchableAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
 
 class Author extends Model
 {
-    use Searchable;
+    use Searchable, SearchableAttributes;
 
     protected $fillable = [
         'name',
@@ -18,19 +19,18 @@ class Author extends Model
         'pivot',
     ];
 
+    public $searchable = [
+        'name'
+    ];
+
     /**
-     * Index only fillable data + id
+     * Index only searchable data
      *
      * @return array
      */
     public function toSearchableArray()
     {
-        $indexable = $this->getFillable();
-        array_push($indexable, $this->getKeyName());
-
-        return array_filter($this->getAttributes(), function ($key) use ($indexable) {
-            return in_array($key, $indexable);
-        }, ARRAY_FILTER_USE_KEY);
+        return $this->getSearchableAttributes($this->searchable, $this->getKeyName(), $this->getAttributes());
     }
 
     public function articles()

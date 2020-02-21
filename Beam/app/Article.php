@@ -6,6 +6,7 @@ use App\Helpers\Journal\JournalHelpers;
 use App\Model\ArticleTitle;
 use App\Model\Config\ConversionRateConfig;
 use App\Model\Tag;
+use App\Traits\SearchableAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
@@ -17,7 +18,7 @@ use Yadakhov\InsertOnDuplicateKey;
 
 class Article extends Model
 {
-    use InsertOnDuplicateKey, Searchable;
+    use InsertOnDuplicateKey, Searchable, SearchableAttributes;
 
     private const DEFAULT_TITLE_VARIANT = 'default';
 
@@ -51,17 +52,18 @@ class Article extends Model
         'updated_at',
     ];
 
+    public $searchable = [
+        'title'
+    ];
+
     /**
-     * Index only id and title
+     * Index only searchable data
      *
      * @return array
      */
     public function toSearchableArray()
     {
-        return [
-            'id' => $this->id,
-            'title' => $this->title
-        ];
+        return $this->getSearchableAttributes($this->searchable, $this->getKeyName(), $this->getAttributes());
     }
 
     public function property()
