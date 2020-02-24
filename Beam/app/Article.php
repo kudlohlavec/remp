@@ -57,6 +57,16 @@ class Article extends Model
     ];
 
     /**
+     * Accessor for runtime-appended search_result_url attribute
+     *
+     * @return string
+     */
+    public function getSearchResultUrlAttribute()
+    {
+        return route('articles.show', $this);
+    }
+
+    /**
      * Index only searchable data
      *
      * @return array

@@ -27,24 +27,21 @@ class SearchController extends Controller
 
     private function normalizeSearchResult(Collection $searchResultCollection)
     {
-        $normalizedCollection = $searchResultCollection->map([$this,'makeOnlySearchableVisible']);
+        /**
+         * @var Searchable $model
+         */
+        $normalizedCollection = $searchResultCollection->map(function ($model) {
+            if (!isset($model->searchable)) {
+                return;
+            }
+
+            $model->makeHidden(array_keys($model->getAttributes()));
+            $model->makeVisible($model->searchable);
+            $model->append('search_result_url');
+
+            return $model;
+        });
 
         return $normalizedCollection->isEmpty() ? '' : $normalizedCollection;
-    }
-
-    /**
-     * @param Searchable $model
-     * @return Searchable|void
-     */
-    public function makeOnlySearchableVisible($model)
-    {
-        if (!isset($model->searchable)) {
-            return;
-        }
-
-        $model->makeHidden(array_keys($model->getAttributes()));
-        $model->makeVisible($model->searchable);
-
-        return $model;
     }
 }

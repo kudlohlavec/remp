@@ -32,6 +32,16 @@ class Segment extends Model
     ];
 
     /**
+     * Accessor for runtime-appended search_result_url attribute
+     *
+     * @return string
+     */
+    public function getSearchResultUrlAttribute()
+    {
+        return route('segments.edit', $this);
+    }
+
+    /**
      * Index only searchable data
      *
      * @return array
