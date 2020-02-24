@@ -3,13 +3,12 @@
 namespace App;
 
 use App\Model\TableName;
-use App\Traits\SearchableAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
 
 class Segment extends Model
 {
-    use TableName, Searchable, SearchableAttributes;
+    use TableName, Searchable;
 
     protected $casts = [
         'active' => 'boolean',
@@ -26,29 +25,18 @@ class Segment extends Model
         'segment_group_id'
     ];
 
-    public $searchable = [
-        'name',
-        'code'
-    ];
-
     /**
-     * Accessor for runtime-appended search_result_url attribute
-     *
-     * @return string
-     */
-    public function getSearchResultUrlAttribute()
-    {
-        return route('segments.edit', $this);
-    }
-
-    /**
-     * Index only searchable data
+     * Index only id, name and code
      *
      * @return array
      */
     public function toSearchableArray()
     {
-        return $this->getSearchableAttributes($this->searchable, $this->getKeyName(), $this->getAttributes());
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'code' => $this->code
+        ];
     }
 
     public function rules()

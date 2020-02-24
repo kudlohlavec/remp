@@ -5,9 +5,8 @@ namespace App\Http\Controllers;
 use App\Article;
 use App\Author;
 use App\Http\Requests\SearchRequest;
+use App\Http\Resources\SearchResource;
 use App\Segment;
-use Illuminate\Support\Collection;
-use Laravel\Scout\Searchable;
 
 class SearchController extends Controller
 {
@@ -15,33 +14,12 @@ class SearchController extends Controller
     {
         $searchTerm = $request->query('term');
 
-        $searchResult['article'] =  $this->normalizeSearchResult(Article::search($searchTerm)->get());
-        $searchResult['author'] =  $this->normalizeSearchResult(Author::search($searchTerm)->get());
-        $searchResult['segment'] =  $this->normalizeSearchResult(Segment::search($searchTerm)->get());
+        $searchResult['articles'] =  Article::search($searchTerm)->get();
+        $searchResult['authors'] =  Author::search($searchTerm)->get();
+        $searchResult['segments'] =  Segment::search($searchTerm)->get();
 
-        //get rid of empty results
-        $searchResult = array_filter($searchResult);
+        $searchCollection = collect($searchResult);
 
-        return response()->json($searchResult);
-    }
-
-    private function normalizeSearchResult(Collection $searchResultCollection)
-    {
-        /**
-         * @var Searchable $model
-         */
-        $normalizedCollection = $searchResultCollection->map(function ($model) {
-            if (!isset($model->searchable)) {
-                return;
-            }
-
-            $model->makeHidden(array_keys($model->getAttributes()));
-            $model->makeVisible($model->searchable);
-            $model->append('search_result_url');
-
-            return $model;
-        });
-
-        return $normalizedCollection->isEmpty() ? '' : $normalizedCollection;
+        return new SearchResource($searchCollection);
     }
 }
