@@ -23,6 +23,8 @@ class ArticleSearchResource extends JsonResource
     {
         return [
             'title' => $this->title,
+            'tags' => $this->tags->pluck('name'),
+            'sections' => $this->sections->pluck('name'),
             'search_result_url' => route('articles.show', $this)
         ];
     }

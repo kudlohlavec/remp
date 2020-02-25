@@ -60,7 +60,9 @@ class Article extends Model
     {
         return [
             'id' => $this->id,
-            'title' => $this->title
+            'title' => $this->title,
+            'tags' => $this->tags->pluck('name'),
+            'sections' => $this->sections->pluck('name')
         ];
     }
 
