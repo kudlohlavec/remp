@@ -2,15 +2,8 @@
 
 namespace App\Http\Resources;
 
-use App\Author;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-/**
- * Class AuthorSearchCollection
- *
- * @mixin Author
- * @package App\Http\Resources
- */
 class AuthorSearchCollection extends ResourceCollection
 {
     /**

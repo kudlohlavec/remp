@@ -5,12 +5,13 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Redis;
+use Laravel\Scout\Searchable;
 use Predis\ClientInterface;
 use Ramsey\Uuid\Uuid;
 
 class Banner extends Model
 {
-    use Notifiable;
+    use Notifiable, Searchable;
 
     const BANNER_TAG = 'banner';
 
@@ -49,6 +50,18 @@ class Banner extends Model
 
     protected $dateFormat = 'Y-m-d H:i:s';
 
+    /**
+     * Index only id and name
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name
+        ];
+    }
 
     protected static function boot()
     {

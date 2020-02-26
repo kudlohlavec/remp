@@ -2,16 +2,16 @@
 
 namespace App\Http\Resources;
 
-use App\Segment;
+use App\Banner;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * Class SegmentSearchResource
+ * Class BannerSearchResource
  *
- * @mixin Segment
+ * @mixin Banner
  * @package App\Http\Resources
  */
-class SegmentSearchResource extends JsonResource
+class BannerSearchResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -23,8 +23,7 @@ class SegmentSearchResource extends JsonResource
     {
         return [
             'name' => $this->name,
-            'code' => $this->code,
-            'search_result_url' => route('segments.edit', $this)
+            'search_result_url' => route('banners.show', $this)
         ];
     }
 }

@@ -2,16 +2,16 @@
 
 namespace App\Http\Resources;
 
-use App\Segment;
+use App\Campaign;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * Class SegmentSearchResource
+ * Class CampaignSearchResource
  *
- * @mixin Segment
+ * @mixin Campaign
  * @package App\Http\Resources
  */
-class SegmentSearchResource extends JsonResource
+class CampaignSearchResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -23,8 +23,8 @@ class SegmentSearchResource extends JsonResource
     {
         return [
             'name' => $this->name,
-            'code' => $this->code,
-            'search_result_url' => route('segments.edit', $this)
+            'banners' => $this->when($this->banners->isNotEmpty(), $this->banners->pluck('name')),
+            'search_result_url' => route('campaigns.show', $this)
         ];
     }
 }

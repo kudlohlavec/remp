@@ -4,13 +4,14 @@ namespace App;
 
 use Fico7489\Laravel\Pivot\Traits\PivotEventTrait;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 use Psy\Util\Json;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Facades\Redis;
 
 class Campaign extends Model
 {
-    use PivotEventTrait;
+    use PivotEventTrait, Searchable;
 
     const ACTIVE_CAMPAIGN_IDS = 'active_campaign_ids';
     const CAMPAIGN_TAG = 'campaign';
@@ -60,6 +61,20 @@ class Campaign extends Model
     ];
 
     protected $appends = ['active'];
+
+    /**
+     * Index only id and name
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'banners' => $this->banners->pluck('name')
+        ];
+    }
 
     protected static function boot()
     {
@@ -252,7 +267,7 @@ class Campaign extends Model
             ->pluck('campaign_id')
             ->unique()
             ->toArray();
-        
+
         Redis::set(self::ACTIVE_CAMPAIGN_IDS, Json::encode(array_values($activeCampaignIds)));
 
         return collect($activeCampaignIds);

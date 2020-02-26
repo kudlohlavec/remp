@@ -6,7 +6,7 @@ use App\Article;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * Class ArticleResource
+ * Class ArticleSearchResource
  *
  * @mixin Article
  * @package App\Http\Resources

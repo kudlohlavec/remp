@@ -4,14 +4,14 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class ArticleSearchCollection extends ResourceCollection
+class CampaignSearchCollection extends ResourceCollection
 {
     /**
      * The resource that this resource collects.
      *
      * @var string
      */
-    public $collects = 'App\Http\Resources\ArticleSearchResource';
+    public $collects = 'App\Http\Resources\CampaignSearchResource';
 
     /**
      * Transform the resource collection into an array.
@@ -22,9 +22,7 @@ class ArticleSearchCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'article' => [
-                $this->collection
-            ]
+            'campaign' => $this->collection
         ];
     }
 }

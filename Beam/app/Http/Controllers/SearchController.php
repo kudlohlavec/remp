@@ -14,9 +14,9 @@ class SearchController extends Controller
     {
         $searchTerm = $request->query('term');
 
-        $searchResult['articles'] =  Article::search($searchTerm)->get();
-        $searchResult['authors'] =  Author::search($searchTerm)->get();
-        $searchResult['segments'] =  Segment::search($searchTerm)->get();
+        $searchResult['articles'] = Article::search($searchTerm)->get();
+        $searchResult['authors'] = Author::search($searchTerm)->get();
+        $searchResult['segments'] = Segment::search($searchTerm)->get();
 
         $searchCollection = collect($searchResult);
 
