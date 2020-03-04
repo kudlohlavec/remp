@@ -22,6 +22,7 @@ class BannerSearchResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'type' => 'banner',
             'name' => $this->name,
             'search_result_url' => route('banners.show', $this)
         ];

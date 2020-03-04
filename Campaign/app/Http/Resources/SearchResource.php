@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Arr;
 
 class SearchResource extends JsonResource
 {
@@ -17,9 +18,9 @@ class SearchResource extends JsonResource
         $banners = $this->get('banners');
         $campaigns = $this->get('campaigns');
 
-        return [
-            $this->when($banners->isNotEmpty(), new BannerSearchCollection($banners)),
-            $this->when($campaigns->isNotEmpty(), new CampaignSearchCollection($campaigns)),
-        ];
+        return Arr::collapse([
+            $this->when($banners->isNotEmpty(), BannerSearchResource::collection($banners)->toArray(app('response'))),
+            $this->when($campaigns->isNotEmpty(), CampaignSearchResource::collection($campaigns)->toArray(app('response')))
+        ]);
     }
 }

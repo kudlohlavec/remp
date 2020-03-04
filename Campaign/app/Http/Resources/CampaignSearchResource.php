@@ -22,6 +22,7 @@ class CampaignSearchResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'type' => 'campaign',
             'name' => $this->name,
             'banners' => $this->when($this->banners->isNotEmpty(), $this->banners->pluck('name')),
             'search_result_url' => route('campaigns.show', $this)
