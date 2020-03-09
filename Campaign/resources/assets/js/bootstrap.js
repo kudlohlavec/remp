@@ -14,10 +14,6 @@ require('eonasdan-bootstrap-datetimepicker');
 require('jquery-placeholder');
 require('./farbtastic');
 
-//check app.js, when requiring typeahead.js from local resources it is pasted into app.js, however when using vendor location it doesnt include it into app.js
-require('./jquery.typeahead');
-// require('jquery-typeahead');
-
 global.autosize = require('autosize');
 
 global.Vue = require('vue');

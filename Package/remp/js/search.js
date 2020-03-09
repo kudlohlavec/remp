@@ -1,3 +1,5 @@
+require('jquery-typeahead');
+
 $(document).ready(function() {
     $.typeahead({
         input: ".js-typeahead",
