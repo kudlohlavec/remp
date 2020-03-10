@@ -22,6 +22,7 @@ class AuthorSearchResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'type' => 'author',
             'name' => $this->name,
             'search_result_url' => route('authors.show', $this)
         ];

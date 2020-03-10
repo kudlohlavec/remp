@@ -56,12 +56,24 @@
         </div>
     </div>
 
-    <div class="media-body h-search">
+    {{--<div class="media-body h-search">
         <form class="p-relative">
             <input type="text" class="hs-input" placeholder="Search for people, files & reports">
             <i class="zmdi zmdi-search hs-reset" data-ma-action="search-clear"></i>
         </form>
-    </div>
+    </div>--}}
+
+    <form>
+        <div class="typeahead__container">
+            <div class="typeahead__field">
+                <div class="typeahead__query">
+                    <input class="js-typeahead"
+                           name="q"
+                           autocomplete="off">
+                </div>
+            </div>
+        </div>
+    </form>
 
 </header>
 

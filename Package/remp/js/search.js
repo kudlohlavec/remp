@@ -6,6 +6,7 @@ $(document).ready(function() {
         dynamic: true,
         debug: true,
         filter: false,
+        highlight: false,
         group: "type",
         source: {
             ajax: {
@@ -15,23 +16,24 @@ $(document).ready(function() {
                 },
             }
         },
-        //uncomment if custom type-related template will be needed
-        /*template: function (query, item) {
-            if (item.type === 'campaign') {
-                return '{{name}}, related banners:{{banners}}'
-            }
-
-            return '{{name}}';
-        },*/
         callback: {
             onPopulateSource: function (node, data, group, path) {
                 let displayKeys = new Set();
 
                 data.forEach( searchResult => {
+                    let keyOrder = 0;
                     //get relevant search keys from current searchResult
                     const searchKeys = Object.keys(searchResult).filter(isSearchRelevantKey);
-                    //add search keys to displayKeys set (add method adds only unique items into the set)
-                    searchKeys.forEach(searchKey => displayKeys.add(searchKey));
+                    //add search keys to displayKeys set (add() method adds only unique items into the set) and add keys to the displayed results as well
+                    searchKeys.forEach(searchKey => {
+                        displayKeys.add(searchKey);
+
+                        searchResult[searchKey] = `<strong>${searchKey}:</strong> ${searchResult[searchKey]}`;
+                        if (keyOrder > 0) {
+                            searchResult[searchKey] = ', ' + searchResult[searchKey];
+                        }
+                        keyOrder++;
+                    });
                 });
 
                 this.options.display = Array.from(displayKeys);

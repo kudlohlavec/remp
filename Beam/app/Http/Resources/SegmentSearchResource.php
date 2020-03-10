@@ -22,6 +22,7 @@ class SegmentSearchResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'type' => 'segment',
             'name' => $this->name,
             'code' => $this->code,
             'search_result_url' => route('segments.edit', $this)

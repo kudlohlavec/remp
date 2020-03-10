@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Arr;
 
 class SearchResource extends JsonResource
 {
@@ -18,10 +19,10 @@ class SearchResource extends JsonResource
         $articles = $this->get('articles');
         $segments = $this->get('segments');
 
-        return [
-            $this->when(!$authors->isEmpty(), new AuthorSearchCollection($authors)),
-            $this->when(!$articles->isEmpty(), new ArticleSearchCollection($articles)),
-            $this->when(!$segments->isEmpty(), new SegmentSearchCollection($segments))
-        ];
+        return Arr::collapse([
+            $this->when($authors->isNotEmpty(), AuthorSearchResource::collection($authors)->toArray(app('response'))),
+            $this->when($articles->isNotEmpty(), ArticleSearchResource::collection($articles)->toArray(app('response'))),
+            $this->when($segments->isNotEmpty(), SegmentSearchResource::collection($segments)->toArray(app('response')))
+        ]);
     }
 }

@@ -22,6 +22,7 @@ class ArticleSearchResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'type' => 'article',
             'title' => $this->title,
             'tags' => $this->tags->pluck('name'),
             'sections' => $this->sections->pluck('name'),
