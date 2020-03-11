@@ -4,7 +4,6 @@ $(document).ready(function() {
     $.typeahead({
         input: ".js-typeahead",
         dynamic: true,
-        debug: true,
         filter: false,
         highlight: false,
         group: "type",
@@ -24,10 +23,10 @@ $(document).ready(function() {
                     let keyOrder = 0;
                     //get relevant search keys from current searchResult
                     const searchKeys = Object.keys(searchResult).filter(isSearchRelevantKey);
-                    //add search keys to displayKeys set (add() method adds only unique items into the set) and add keys to the displayed results as well
                     searchKeys.forEach(searchKey => {
+                        //add search keys to displayKeys set (add() method adds only unique items into the set)
                         displayKeys.add(searchKey);
-
+                        //and add keys to the displayed results as well
                         searchResult[searchKey] = `<strong>${searchKey}:</strong> ${searchResult[searchKey]}`;
                         if (keyOrder > 0) {
                             searchResult[searchKey] = ', ' + searchResult[searchKey];
@@ -43,6 +42,9 @@ $(document).ready(function() {
                 event.preventDefault();
                 window.location = item.search_result_url;
             },
+            onSubmit: function (node, form, item, event) {
+                event.preventDefault();
+            }
         }
     });
 });

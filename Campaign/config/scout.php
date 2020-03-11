@@ -95,7 +95,7 @@ return [
             'max_expansions' => 50,
             'distance' => 2
         ],
-        'asYouType' => false,
+        'asYouType' => true,
         'searchBoolean' => env('TNTSEARCH_BOOLEAN', false),
     ],
 
