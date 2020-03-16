@@ -27,6 +27,33 @@ $.extend( $.fn.dataTable.defaults, {
             }
         })
     },
+    stateSaveCallback: function (settings, data) {
+        //encode current state to base64
+        const state = btoa(JSON.stringify(data));
+        //get query part of the url
+        let searchParams = new URLSearchParams(window.location.search);
+        //add encoded state into query part
+        searchParams.set($(this).attr('id') + '_state', state);
+        //form url with new query parameter
+        const newRelativePathQuery = window.location.pathname + '?' + searchParams.toString() + window.location.hash;
+        //push new url into history object, this will change the current url without need of reload
+        history.pushState(null, '', newRelativePathQuery);
+    },
+    stateLoadCallback: function (settings) {
+        const url = new URL(window.location.href);
+        let state = url.searchParams.get($(this).attr('id') + '_state');
+
+        //check the current url to see if we've got a state to restore
+        if (!state) {
+            return null;
+        }
+
+        //if we got the state, decode it and add current timestamp
+        state = JSON.parse(atob(state));
+        state['time'] = Date.now();
+
+        return state;
+    }
 });
 
 $.fn.dataTables = {
