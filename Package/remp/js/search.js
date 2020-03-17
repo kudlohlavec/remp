@@ -6,6 +6,7 @@ $(document).ready(function() {
         dynamic: true,
         filter: false,
         highlight: false,
+        maxItem: false,
         group: "type",
         source: {
             ajax: {
