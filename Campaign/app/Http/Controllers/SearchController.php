@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Banner;
 use App\Campaign;
+use App\Http\Requests\SearchRequest;
 use App\Http\Resources\SearchResource;
-use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
-    public function search(Request $request)
+    public function search(SearchRequest $request)
     {
         $searchTerm = $request->query('term');
 
